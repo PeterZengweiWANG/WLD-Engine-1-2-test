@@ -18,6 +18,8 @@ type EditNode = {
   context: GNode[];
 };
 
+//Generates a knowledge graph of a given concept and allows for quering it
+//The onChange event is fired whenever the graph changes for integration with other components
 export default function KnowledgeGraph({
   graph = { nodes: [], edges: [] },
   onUpdate = (graph: Graph) => {},
@@ -99,9 +101,9 @@ export default function KnowledgeGraph({
         JSON.stringify({ concept, nodes, edges }),
         1024,
         `The user will provide you with a knowledge graph of entities and relationships.
-        Generate an array of new nodes to add to the graph that further connect and explain entities and relationships.
-        Add nodes and relationships to nodes that do not have many existing edges. 
-        Return your response in JSON in the format {newNodes:Node[], newEdges: Edge[]}.`,
+       Generate an array of new nodes to add to the graph that further connect and explain entities and relationships.
+       Add nodes and relationships to nodes that do not have many existing edges. 
+       Return your response in JSON in the format {newNodes:Node[], newEdges: Edge[]}.`,
         true
       );
       const graphJSON = JSON.parse(graph);
@@ -122,8 +124,8 @@ export default function KnowledgeGraph({
         JSON.stringify({ concept, nodes, edges }),
         undefined,
         `The user will provide you with a knowledge graph of entities and relationships as well as a concept for a new knowledge graph.
-        Generate an array of new nodes to add to the graph that merge the knew concept with the existing knowledge graph.
-        Return your response in JSON in the format {newNodes:Node[], newEdges: Edge[]}.`,
+       Generate an array of new nodes to add to the graph that merge the knew concept with the existing knowledge graph.
+       Return your response in JSON in the format {newNodes:Node[], newEdges: Edge[]}.`,
         true
       );
       const graphJSON = JSON.parse(graph);
@@ -172,11 +174,11 @@ export default function KnowledgeGraph({
         JSON.stringify({ concept, nodes, edges }),
         undefined,
         `The user will provide you with an implementation of a specific concept in the form of a knowledge graph.
-        Consider the relationship between all entities in the graph and their specific implementation. 
-        Adjust implementation specifications for greater consistency accross the project. 
-        Where specific implementation data is missing or ambiguous, add this to the node.
-        Generate a map using the node ID as the key and the updated implementation specifications as the value.
-        Return your response in JSON in the format {[id:string]: any}.`,
+         Consider the relationship between all entities in the graph and their specific implementation. 
+         Adjust implementation specifications for greater consistency accross the project. 
+         Where specific implementation data is missing or ambiguous, add this to the node.
+         Generate a map using the node ID as the key and the updated implementation specifications as the value.
+         Return your response in JSON in the format {[id:string]: any}.`,
         true
       );
       const graphJSON = JSON.parse(graph);
@@ -206,11 +208,6 @@ export default function KnowledgeGraph({
     console.log(node);
     setSelectedNode(node);
     onSelect(node);
-    
-    // If the node has an image property, generate a panorama background
-    if (node.properties?.image) {
-      handleSelect(node);
-    }
   };
 
   const handleRightClick = (
@@ -219,7 +216,7 @@ export default function KnowledgeGraph({
     onNode: boolean,
     nodes: GNode[]
   ) => {
-    // Create a new node at the location of the right click
+    //create a new node at the location of the right click
     console.log(x, y, onNode, nodes);
     const e = { x, y, context: nodes } as EditNode;
     if (onNode) e.node = nodes[0];
@@ -229,17 +226,18 @@ export default function KnowledgeGraph({
   const handleClose = () => {
     setEditNode(null);
   };
+  
 
   const handleCreateNode = async (node: GNode, context: GNode[]) => {
-    // Connect to graph
+    //connect to graph
     try {
       const newEdges = await getGroqCompletion(
         JSON.stringify({ concept, node, context: editNode }),
         128,
         `The user will provide you with a concept, node and an array of proximate nodes in a knowledge graph representing some aspect of this concept.
-        Generate an array of new edges that relate the node to the context.
-        Only generate edges if they are relevant to the context.
-        Return your response in JSON in the format {edges: {source:id, target:id, relation:string}[]}.`,
+         Generate an array of new edges that relate the node to the context.
+         Only generate edges if they are relevant to the context.
+         Return your response in JSON in the format {edges: {source:id, target:id, relation:string}[]}.`,
         true
       );
       const graphJSON = JSON.parse(newEdges);
@@ -267,10 +265,10 @@ export default function KnowledgeGraph({
         1024,
         `The user will provide you with a knowledge graph of entities and relationships.
         The user has made a query to the graph and identified that there is additional information that should be included.
-        Generate a new array of nodes and a new array of edges to append to the graph that maps the new information.
-        Where the additional information is ambiguous or does not provide specific implementation details, add these to the new node.
-        Where the additional information provides options, select one option and specify exact data.
-        Return your response in JSON in the format {newNodes:Node[], newEdges: Edge[]}.`,
+         Generate a new array of nodes and a new array of edges to append to the graph that maps the new information.
+         Where the additional information is ambiguous or does not provide specific implementation details, add these to the new node.
+         Where the additional information provides options, select one option and specify exact data.
+         Return your response in JSON in the format {newNodes:Node[], newEdges: Edge[]}.`,
         true
       );
       const graphJSON = JSON.parse(graph);
@@ -315,6 +313,7 @@ export default function KnowledgeGraph({
     setEdges(newEdges);
     setEditNode(null);
   };
+  
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-full gap-4 bg-white rounded-lg p-4 border border-black/25">
@@ -430,12 +429,12 @@ function EditNodeDialog({
   const [generating, setGenerating] = useState(false);
 
   const handleConfirm = () => {
-    // Update the node and close the dialog
+    //update the node and close the dialog
     if (editNode.node) {
       editNode.node.name = name;
       editNode.node.properties = properties;
     } else {
-      // Add new node
+      //add new node
       const id = crypto.randomBytes(4).toString("hex");
       onCreate(
         { id: id, name, x: editNode.x, y: editNode.y, properties },
@@ -458,8 +457,8 @@ function EditNodeDialog({
         JSON.stringify({ concept, context: editNode, nodes: graph }),
         undefined,
         `The user will provide you with a concept and an array of proximate nodes in a graph representing some aspect of this concept.
-        Generate a new node that fits into this graph.
-        Return your response in JSON in the format {x:number, y:number, name:string, properties:{description:string}}.`,
+         Generate a new node that fits into this graph.
+         Return your response in JSON in the format {x:number, y:number, name:string, properties:{description:string}}.`,
         true
       );
       const graphJSON = JSON.parse(node);
@@ -504,55 +503,49 @@ function EditNodeDialog({
               key={key}
               className="flex w-full gap-4 items-center justify-between"
             >
+              <span>{key}</span>
               <input
-                className="p-2 bg-white rounded-lg w-1/3 border border-black/10"
-                value={key}
-                readOnly
-              />
-              <input
+                className="p-2 bg-white rounded-lg w-full border border-black/10"
+                value={properties[key]}
                 onChange={(e) =>
                   setProperties({ ...properties, [key]: e.target.value })
                 }
-                className="p-2 bg-white rounded-lg w-full border border-black/10"
-                value={value as string}
               />
             </div>
           ))}
-        <div className="flex w-full gap-4 items-center justify-between">
+        <div className="w-full border border-black/50 p-2 flex flex-col rounded-lg gap-2">
           <input
-            className="p-2 bg-white rounded-lg w-1/3 border border-black/10"
-            value={newPropKey}
-            placeholder="New property"
             onChange={(e) => setNewPropKey(e.target.value)}
+            className="p-2 bg-white rounded-lg w-full border border-black/10"
+            value={newPropKey}
           />
           <button
-            className="p-2 bg-white rounded-lg border border-black/10 hover:shadow"
+            className="p-2 bg-white w-full rounded-lg border hover:shadow"
             onClick={addProperty}
           >
-            Add
+            Add Property
           </button>
         </div>
-        <div className="flex w-full gap-4 items-center justify-between">
+
+        <div className="flex justify-between items-center gap-2">
+          <button className="p-2 bg-white rounded-lg" onClick={onClose}>
+            Cancel
+          </button>
+
           <button
+            className="p-2 bg-white rounded-lg border w-full hover:shadow"
             onClick={handleConfirm}
-            className="p-2 bg-white rounded-lg border border-black/10 hover:shadow"
           >
-            Confirm
+            Confirm Changes
           </button>
           {editNode.node && (
             <button
-              onClick={() => onDelete(editNode.node!)}
-              className="p-2 bg-white rounded-lg border border-black/10 hover:shadow"
+              className=" text-red-500 p-2 bg-white rounded-lg"
+              onClick={() => onDelete(editNode.node as GNode)}
             >
               Delete
             </button>
           )}
-          <button
-            onClick={onClose}
-            className="p-2 bg-white rounded-lg border border-black/10 hover:shadow"
-          >
-            Close
-          </button>
         </div>
       </div>
     </div>

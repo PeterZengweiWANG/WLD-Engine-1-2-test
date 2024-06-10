@@ -1,11 +1,9 @@
-// src\app\timeline\page.tsx
-
 "use client";
 import Agents from "@/components/Agents";
 import { useState } from "react";
 import Narration from "@/components/Narration";
 import KnowledgeGraph from "@/components/KnowledgeGraph";
-import { GNode, Graph, Edge, relaxGraph } from "@/components/Graph";
+import { GNode, Graph, relaxGraph } from "@/components/Graph";
 import { getGroqCompletion } from "@/ai/groq";
 import Timeline, { TimelineEvent } from "@/components/Timeline";
 import { jsonText } from "@/ai/prompts";
@@ -79,19 +77,6 @@ export default function AgentsPage() {
           },
         };
         updatedNodes.push(eventNode);
-
-        // Generate edges between the Event Node and other relevant nodes
-        const eventEdgesResponse: string = await getGroqCompletion(
-          JSON.stringify({ graph, eventNode, currentEvent }),
-          512,
-          `Given the current graph, event node, and event details, generate appropriate edges to connect the event node with other relevant nodes in the graph.
-           Analyze the event's context and its potential impact on other nodes to determine the relationships and connections.
-           Return the new edges in the format: {edges: {source: string, target: string, relation: string}[]}.`,
-          true
-        );
-
-        const parsedEventEdges: Edge[] = JSON.parse(eventEdgesResponse).edges;
-        graphJSON.newEdges.push(...parsedEventEdges);
       }
 
       const edges = [...graph.edges, ...graphJSON.newEdges];
@@ -110,8 +95,8 @@ export default function AgentsPage() {
         data: newGraph,
       });
     } catch (e) {
-      console.error("Error in handleResponse:", e);
-      alert("Failed to update graph. Please check the console for more details.");
+      console.error(e);
+      alert("failed to update graph");
     }
     setGenerating(false);
   };

@@ -10,7 +10,8 @@ import { jsonText } from "@/ai/prompts";
 import { unstable_noStore as noStore } from "next/cache";
 import { generateImageFal } from "@/ai/fal";
 import Panorama from "@/components/Panorama";
-import Chronology from "@/components/Chronology"; // <-- Added this import
+import Chronology, { Event } from "@/components/Chronology";
+import crypto from "crypto";
 
 //This is new - just provide a high level goal and groq will figure out how to make agents
 const agentGoal =
@@ -33,6 +34,7 @@ export default function AgentsPage() {
   const [currentYear, setCurrentYear] = useState<number>(startYear);
   const [fetching, setFetching] = useState<boolean>(false);
   const [img, setImg] = useState<string>("");
+  const [currentEvent, setCurrentEvent] = useState<Event | null>(null);
 
   const handleResponse = async (newAgents: any[]) => {
     setGenerating(true);
@@ -61,6 +63,22 @@ export default function AgentsPage() {
         const node: any = updatedNodes.find((n) => n.id === id);
         if (node) node.state = state;
       }
+
+      // Introduce the current event into the Graph JSON
+      if (currentEvent) {
+        const eventNode: GNode = {
+          id: crypto.randomBytes(4).toString("hex"),
+          name: currentEvent.title,
+          x: Math.random() * 100,
+          y: Math.random() * 100,
+          properties: {
+            influence: currentEvent.influence,
+            description: currentEvent.description,
+          },
+        };
+        updatedNodes.push(eventNode);
+      }
+
       const edges = [...graph.edges, ...graphJSON.newEdges];
       const relaxed = relaxGraph(
         [...updatedNodes, ...graphJSON.newNodes],
@@ -160,7 +178,7 @@ export default function AgentsPage() {
               goal={agentGoal}
               time={currentYear.toString()}
             />
-            <Chronology graph={graph} /> {/* <-- Added this line */}
+            <Chronology graph={graph} onEventGenerated={setCurrentEvent} />
           </div>
         </div>
       </div>

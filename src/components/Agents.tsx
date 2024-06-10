@@ -25,7 +25,6 @@ export default function Agents({
     setGenerating(true);
     try {
       const newAgents = await getGroqCompletion(
-        //run all agents in parallel
         JSON.stringify({
           context,
           goal,
@@ -49,7 +48,6 @@ export default function Agents({
   };
 
   const runAgents = async () => {
-    //don't generate if already running
     if (generating) return;
     if (agents.length === 0 && goal) {
       await generateAgents(world, goal);
@@ -58,7 +56,6 @@ export default function Agents({
     setGenerating(true);
     try {
       const newAgents = await getGroqCompletion(
-        //run all agents in parallel
         JSON.stringify({ world, agents, currentYear: time }),
         1024,
         `You simulate autonomous agent behaviour within a world state represented by a knowledge graph. 
@@ -76,7 +73,6 @@ export default function Agents({
       console.error(e);
       alert("Error running agents");
     }
-
     setGenerating(false);
   };
 

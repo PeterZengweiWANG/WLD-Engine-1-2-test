@@ -2,13 +2,19 @@ import { useState, useEffect } from "react";
 import { getGroqCompletion } from "@/ai/groq";
 import { jsonText } from "@/ai/prompts";
 
-type Event = {
+export type Event = {
   title: string;
   influence: "Positive" | "Negative" | "Neutral";
   description: string;
 };
 
-export default function Chronology({ graph }: { graph: any }) {
+export default function Chronology({
+  graph,
+  onEventGenerated,
+}: {
+  graph: any;
+  onEventGenerated: (event: Event) => void;
+}) {
   const [event, setEvent] = useState<Event | null>(null);
 
   useEffect(() => {
@@ -26,6 +32,7 @@ export default function Chronology({ graph }: { graph: any }) {
         const eventJSON = JSON.parse(eventResponse);
         console.log("Generated event:", eventJSON);
         setEvent(eventJSON);
+        onEventGenerated(eventJSON);
       } catch (e) {
         console.error(e);
         alert("Failed to generate event");
@@ -35,7 +42,7 @@ export default function Chronology({ graph }: { graph: any }) {
     if (graph) {
       generateEvent();
     }
-  }, [graph]);
+  }, [graph, onEventGenerated]);
 
   return (
     <div className="flex flex-col w-full rounded-lg border border-black/25 p-4">

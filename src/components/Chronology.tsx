@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { getGroqCompletion } from "@/ai/groq";
 import { jsonText } from "@/ai/prompts";
-import { GNode, Graph } from "./Graph";
 
 type Event = {
   title: string;
@@ -9,31 +8,33 @@ type Event = {
   description: string;
 };
 
-export default function Chronology({ graph }: { graph: Graph }) {
+export default function Chronology({ graph }: { graph: any }) {
   const [event, setEvent] = useState<Event | null>(null);
 
-  const generateEvent = async () => {
-    try {
-      const requestString = `${JSON.stringify(graph)}`;
-      const eventResponse = await getGroqCompletion(
-        requestString,
-        512,
-        `Based on the provided knowledge graph of the design project, generate an event that could either have a positive, negative, or neutral influence on the project in Healesville.
-        Return your response in JSON in the format {title: string, influence: "Positive" | "Negative" | "Neutral", description: string}.
-        The event description should be around 70 words.` + jsonText,
-        true
-      );
-      const eventJSON = JSON.parse(eventResponse);
-      console.log("Generated event:", eventJSON);
-      setEvent(eventJSON);
-    } catch (e) {
-      console.error(e);
-      alert("Failed to generate event");
-    }
-  };
-
   useEffect(() => {
-    generateEvent();
+    const generateEvent = async () => {
+      try {
+        const requestString = `${JSON.stringify(graph)}`;
+        const eventResponse = await getGroqCompletion(
+          requestString,
+          512,
+          `Based on the provided knowledge graph of the design project, generate an event that could either have a positive, negative, or neutral influence on the project in Healesville.
+          Return your response in JSON in the format {title: string, influence: "Positive" | "Negative" | "Neutral", description: string}.
+          The event description should be around 70 words.` + jsonText,
+          true
+        );
+        const eventJSON = JSON.parse(eventResponse);
+        console.log("Generated event:", eventJSON);
+        setEvent(eventJSON);
+      } catch (e) {
+        console.error(e);
+        alert("Failed to generate event");
+      }
+    };
+
+    if (graph) {
+      generateEvent();
+    }
   }, [graph]);
 
   return (

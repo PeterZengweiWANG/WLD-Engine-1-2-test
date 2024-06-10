@@ -10,7 +10,7 @@ import { jsonText } from "@/ai/prompts";
 import { unstable_noStore as noStore } from "next/cache";
 import { generateImageFal } from "@/ai/fal";
 import Panorama from "@/components/Panorama";
-import Chronology from "@/components/Chronology";
+import Chronology from "@/components/Chronology"; // <-- Added this import
 
 //This is new - just provide a high level goal and groq will figure out how to make agents
 const agentGoal =
@@ -109,13 +109,6 @@ export default function AgentsPage() {
     setFetching(false);
   };
 
-  const handleEventGenerated = (eventNode: GNode) => {
-    setGraph({
-      nodes: [...graph.nodes, eventNode],
-      edges: graph.edges,
-    });
-  };
-
   return (
     <main className="">
       <div className="z-10 max-w-lg w-full items-center justify-between font-mono text-sm lg:flex">
@@ -129,7 +122,7 @@ export default function AgentsPage() {
           textToNarrate={JSON.stringify(graph)}
           captionPrompt={`You are provided with a world state and an array of agents performing tasks to make changes to this world state. 
         Write a short script that narrates a documentary film of the starting and the continuing development processes of an urban+landscape+architectural design project for Healesville, Victoria that dramatizes these events and embellishes them where necessary to make them 
-        engaging to the audience. Narrate the documentary as lines of dialogue by a narrator and other characters. Place each item of dialogue on a new line. 
+        engaging to the audience. Narrate the documenary as lines of dialogue by a narrator and other characters. Place each item of dialogue on a new line. 
         Each line should be in the format "Speaker: Dialogue". Do not include any other text or explanation.`}
           imagePrompt={`You are an expert photographer describing images to the blind. Images are taken in Healesville, Victoria. You describe a scene provided by the user in vivid detail. 
           Describe the scene as if you were painting a picture with words. Start your description with: "A photograph of" then use keywords and simple phrases separated by commas.
@@ -167,7 +160,7 @@ export default function AgentsPage() {
               goal={agentGoal}
               time={currentYear.toString()}
             />
-            <Chronology graph={graph} onEventGenerated={handleEventGenerated} />
+            <Chronology graph={graph} /> {/* <-- Added this line */}
           </div>
         </div>
       </div>

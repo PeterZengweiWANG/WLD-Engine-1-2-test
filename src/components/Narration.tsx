@@ -3,6 +3,8 @@ import Caption from "./Caption";
 import { useEffect, useState } from "react";
 import { getGeminiVision } from "@/ai/gemini";
 import Animation from "./Animation";
+import { Event } from "./Chronology";
+
 //Component that turns anything into a narrated script
 
 //TODO - add a style prop and a next / prev button incase the narration doesn't play
@@ -13,6 +15,7 @@ export default function Narration({
   imagePrompt,
   onNarration,
   onCompleteLine,
+  currentEvent,
 }: {
   play?: boolean;
   textToNarrate: string;
@@ -20,6 +23,7 @@ export default function Narration({
   imagePrompt: string;
   onNarration?: (narration: string) => void;
   onCompleteLine?: (line: string, nextLine: string) => void;
+  currentEvent?: Event | null;
 }) {
   const [script, setScript] = useState<string[]>([]);
   const [currentLine, setCurrentLine] = useState<number>(0);
@@ -30,7 +34,7 @@ export default function Narration({
     if (!play) return;
     const generateNarrative = async () => {
       const description = await getGeminiVision(
-        textToNarrate,
+        JSON.stringify({ graph: textToNarrate, currentEvent }),
         undefined,
         captionPrompt
       );
@@ -46,7 +50,7 @@ export default function Narration({
     };
 
     generateNarrative();
-  }, [textToNarrate, play]);
+  }, [textToNarrate, play, currentEvent]);
 
   const handleReadText = () => {
     if (currentLine < script.length - 1) {

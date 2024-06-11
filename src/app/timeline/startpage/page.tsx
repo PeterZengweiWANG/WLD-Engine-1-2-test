@@ -18,6 +18,11 @@ export default function StartPage() {
         <Link href="/timeline">
             Enter the Project
         </Link>
+        
+        <Link href="/agents2/scenario">
+          Scenario Simulator
+          </Link>
+          
       </div>
     </main>
   );

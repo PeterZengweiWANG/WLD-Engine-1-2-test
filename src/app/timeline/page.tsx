@@ -139,12 +139,13 @@ export default function AgentsPage() {
           play={playNarration}
           textToNarrate={JSON.stringify(graph)}
           captionPrompt={`You are provided with a world state and an array of agents performing tasks to make changes to this world state. 
-        Write a short script that narrates a documentary film of the starting and the continuing development processes of an urban+landscape+architectural design project for Healesville, Victoria that dramatizes these events and embellishes them where necessary to make them 
-        engaging to the audience. Narrate the documenary as lines of dialogue by a narrator and other characters. Place each item of dialogue on a new line. 
-        Each line should be in the format "Speaker: Dialogue". Do not include any other text or explanation.`}
-          imagePrompt={`You are an expert photographer describing images to the blind. Images are taken in Healesville, Victoria. You describe a scene provided by the user in vivid detail. 
-          Describe the scene as if you were painting a picture with words. Start your description with: "A photograph of" then use keywords and simple phrases separated by commas.
-          End your description with: Canon EOS 5D Mark IV 24mm f/8 1/250s ISO 100 2019`}
+          Write a long script that narrates a reporter live streaming records collaboration about the whole story including the start, the development processes, and the end of an urban+landscape+architectural design project for Healesville, Victoria, that dramatizes these processes and embellishes them where necessary to make them engaging to the audience. The script of design project record would be both full of opportunities and challenges due to the Unexpected Consequence Events contained in the world state.
+          Narrate the design project record as lines of dialogue by a narrator and other characters. Place each item of dialogue on a new line. 
+          Each line should be in the format "Speaker: Dialogue". Do not include any other text or explanation.`}
+          imagePrompt={`You are a melbourne borned god-tier tv channel live streaming cameraman
+          who can travel to the near future with your professional camera and famous for only taking photos in Australia. You travelled across the timelines 2024 to 2050 capturing and documenting the development processes of an urban planning+ landscape arhictecture project and related scenes in Healesville, Victoria, Australia. Now describing the images you recorded to the blind. You describe an scene in Healesville provided by the user in vivid and attractive detail. 
+          Describe the scene as if you were painting a picture with words. Start your description with: "A Boldly-composed award-winning photograph of" then use keywords and simple phrases separated by commas.
+          End your description with: Canon EOS-1D X Mark III 24mm f/8 1/250s ISO 200 2021`}
         />
         <div id="Agent UI" className="flex flex-col p-8 z-50">
           <button

@@ -13,52 +13,52 @@ export default function Chronology({
   onEventGenerated,
 }: {
   graph: any;
-  onEventGenerated: (event: Event) => void;
+  onEventGenerated: (event: Event[]) => void;
 }) {
-  const [event, setEvent] = useState<Event | null>(null);
+  const [events, setEvents] = useState<Event[]>([]);
+
+  const generateEvent = async () => {
+    try {
+      const requestString = `${JSON.stringify(graph)}`;
+      const eventResponse = await getGroqCompletion(
+        requestString,
+        512,
+        `Based on the provided knowledge graph of the design project, generate an event that could either have a positive, negative, or neutral influence on the project in Healesville.
+        Return your response in JSON in the format {title: string, influence: "Positive" | "Negative" | "Neutral", description: string}.
+        The event description should be around 70 words.` + jsonText,
+        true
+      );
+      const eventJSON = JSON.parse(eventResponse);
+      console.log("Generated event:", eventJSON);
+      setEvents((prevEvents) => [...prevEvents, eventJSON]);
+      onEventGenerated([...events, eventJSON]);
+    } catch (e) {
+      console.error(e);
+      alert("Failed to generate event");
+    }
+  };
 
   useEffect(() => {
-    const generateEvent = async () => {
-      try {
-        const requestString = `${JSON.stringify(graph)}`;
-        const eventResponse = await getGroqCompletion(
-          requestString,
-          512,
-          `Based on the provided knowledge graph of the design project, generate an unexpected consequence event that could either have a positive, negative, or neutral influence on the design project in Healesville.
-          Return your response in JSON in the format {title: string, influence: "Positive" | "Negative" | "Neutral", description: string}.
-          The event description should be around 70 words.` + jsonText,
-          true
-        );
-        const eventJSON = JSON.parse(eventResponse);
-        console.log("Generated event:", eventJSON);
-        setEvent(eventJSON);
-        onEventGenerated(eventJSON);
-      } catch (e) {
-        console.error(e);
-        alert("Failed to generate event");
-      }
-    };
-
     const intervalId = setInterval(() => {
-      if (graph) {
-        generateEvent();
-      }
-    }, 20000); // Generate events every 30 seconds
+      generateEvent();
+    }, Math.random() * 40000 + 20000); // Random interval between 20 and 40 seconds
 
     return () => {
       clearInterval(intervalId);
     };
-  }, [graph, onEventGenerated]);
+  }, [graph]);
 
   return (
     <div className="flex flex-col w-full rounded-lg border border-black/25 p-4">
       <h2 className="text-lg font-semibold mb-4">Chronology of Events</h2>
-      {event ? (
-        <div>
-          <p className="font-semibold">Event Title: {event.title}</p>
-          <p>Event Influence: {event.influence}</p>
-          <p>Event Description: {event.description}</p>
-        </div>
+      {events.length > 0 ? (
+        events.map((event, index) => (
+          <div key={index}>
+            <p className="font-semibold">Event Title: {event.title}</p>
+            <p>Event Influence: {event.influence}</p>
+            <p>Event Description: {event.description}</p>
+          </div>
+        ))
       ) : (
         <p>No event generated yet.</p>
       )}

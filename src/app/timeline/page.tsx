@@ -34,13 +34,15 @@ export default function AgentsPage() {
   const [currentYear, setCurrentYear] = useState<number>(startYear);
   const [fetching, setFetching] = useState<boolean>(false);
   const [img, setImg] = useState<string>("");
-  const [currentEvent, setCurrentEvent] = useState<Event | null>(null);
+  const [currentEvent, setCurrentEvent] = useState<Event[]>([]);
 
   const handleResponse = async (newAgents: any[]) => {
     setGenerating(true);
+    //now we have the new agents we can implement our logic for how to update the graph.
     try {
       const requestString = `${JSON.stringify({ graph, newAgents })}`;
       console.log(requestString);
+      //just refine implementation
       const newStates = await getGroqCompletion(
         requestString,
         1024,
@@ -55,6 +57,7 @@ export default function AgentsPage() {
       );
       const graphJSON = JSON.parse(newStates);
       console.log(graphJSON);
+      //iterate over state updates
       const updatedNodes = [...graph.nodes];
       for (const [id, state] of Object.entries(graphJSON.newStates)) {
         const node: any = updatedNodes.find((n) => n.id === id);
@@ -63,25 +66,19 @@ export default function AgentsPage() {
 
       // Introduce the current event into the Graph JSON
       if (currentEvent) {
-        const eventNode: GNode = {
-          id: crypto.randomBytes(4).toString("hex"),
-          name: currentEvent.title,
-          x: Math.random() * 100,
-          y: Math.random() * 100,
-          properties: {
-            influence: currentEvent.influence,
-            description: currentEvent.description,
-          },
-        };
-        updatedNodes.push(eventNode);
-
-        // Connect the event node to existing nodes
-        const newEdges = updatedNodes.slice(0, 3).map((node) => ({
-          source: eventNode.id,
-          target: node.id,
-          relation: "influences",
-        }));
-        graphJSON.newEdges.push(...newEdges);
+        currentEvent.forEach((event) => {
+          const eventNode: GNode = {
+            id: crypto.randomBytes(4).toString("hex"),
+            name: event.title,
+            x: Math.random() * 100,
+            y: Math.random() * 100,
+            properties: {
+              influence: event.influence,
+              description: event.description,
+            },
+          };
+          updatedNodes.push(eventNode);
+        });
       }
 
       const edges = [...graph.edges, ...graphJSON.newEdges];
@@ -93,6 +90,7 @@ export default function AgentsPage() {
 
       setGraph(newGraph);
       setCurrentYear((c) => c + 5);
+      //add to timeline
       timelineEvents.push({
         time: currentYear,
         title: currentYear.toString(),
@@ -121,9 +119,11 @@ export default function AgentsPage() {
 
   const handleNodeSelect = async (node: GNode) => {
     setFetching(true);
+    //improve prompt
     const newPrompt =
       "An equirectangular panorama of" + node.name + node.properties.image ??
       "" + ". Canon EOS 5D Mark IV 24mm f/8 1/250s ISO 100";
+    //if immersive use blockade otherwise just use fal
     const pano = await generateImageFal(newPrompt);
     if (pano) setImg(pano);
     setFetching(false);
@@ -140,13 +140,14 @@ export default function AgentsPage() {
         <Narration
           play={playNarration}
           textToNarrate={JSON.stringify(graph)}
-          captionPrompt={`You are provided with a world state and an array of agents performing tasks to make changes to this world state. 
-        Write a short script that narrates a documentary film of the starting and the continuing development processes of an urban+landscape+architectural design project for Healesville, Victoria that dramatizes these events and embellishes them where necessary to make them 
-        engaging to the audience. Narrate the documenary as lines of dialogue by a narrator and other characters. Place each item of dialogue on a new line. 
-        Each line should be in the format "Speaker: Dialogue". Do not include any other text or explanation.`}
-          imagePrompt={`You are an expert photographer describing images to the blind. Images are taken in Healesville, Victoria. You describe a scene provided by the user in vivid detail. 
-          Describe the scene as if you were painting a picture with words. Start your description with: "A photograph of" then use keywords and simple phrases separated by commas.
-          End your description with: Canon EOS 5D Mark IV 24mm f/8 1/250s ISO 100 2019`}
+          captionPrompt={`You are provided with a world state and an array of agents performing tasks to make changes to this world state, as well as a list of events that occur during the project timeline.
+            Write a short script that narrates a documentary film of the starting and the continuing development processes of an urban+landscape+architectural design project for Healesville, Victoria that dramatizes these events and embellishes them where necessary to make them
+            engaging to the audience. Narrate the documentary as lines of dialogue by a narrator and other characters. Place each item of dialogue on a new line.
+            Each line should be in the format "Speaker: Dialogue". Do not include any other text or explanation.`}
+          imagePrompt={`You are an expert photographer describing images to the blind. Images are taken in Healesville, Victoria. You describe a scene provided by the user in vivid detail.
+            Describe the scene as if you were painting a picture with words. Start your description with: "A photograph of" then use keywords and simple phrases separated by commas.
+            End your description with: Canon EOS 5D Mark IV 24mm f/8 1/250s ISO 100 2019`}
+          events={currentEvent} // Pass the list of events
         />
         <div id="Agent UI" className="flex flex-col p-8 z-50">
           <button

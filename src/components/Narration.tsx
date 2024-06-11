@@ -3,11 +3,13 @@ import Caption from "./Caption";
 import { useEffect, useState } from "react";
 import { getGeminiVision } from "@/ai/gemini";
 import Animation from "./Animation";
-import { Event } from "./Chronology";
 
-//Component that turns anything into a narrated script
+export type Event = {
+  title: string;
+  influence: "Positive" | "Negative" | "Neutral";
+  description: string;
+};
 
-//TODO - add a style prop and a next / prev button incase the narration doesn't play
 export default function Narration({
   play = true,
   textToNarrate,
@@ -15,7 +17,7 @@ export default function Narration({
   imagePrompt,
   onNarration,
   onCompleteLine,
-  currentEvent,
+  events, // Add this prop
 }: {
   play?: boolean;
   textToNarrate: string;
@@ -23,34 +25,32 @@ export default function Narration({
   imagePrompt: string;
   onNarration?: (narration: string) => void;
   onCompleteLine?: (line: string, nextLine: string) => void;
-  currentEvent?: Event | null;
+  events: Event[]; // Add this prop type
 }) {
   const [script, setScript] = useState<string[]>([]);
   const [currentLine, setCurrentLine] = useState<number>(0);
   const [currentText, setCurrentText] = useState<string | null>(null);
 
   useEffect(() => {
-    //generate the narrative
     if (!play) return;
     const generateNarrative = async () => {
+      const combinedInput = {
+        graph: textToNarrate,
+        events: events,
+      };
       const description = await getGeminiVision(
-        JSON.stringify({ graph: textToNarrate, currentEvent }),
+        JSON.stringify(combinedInput),
         undefined,
         captionPrompt
       );
-      //filter empty lines
       setScript(description.split("\n").filter((line) => line !== ""));
-      console.log(
-        "Generated Script",
-        description.split("\n").filter((line) => line !== "")
-      );
       setCurrentLine(0);
       setCurrentText(description.split("\n")[0]);
       if (onNarration) onNarration(description);
     };
 
     generateNarrative();
-  }, [textToNarrate, play, currentEvent]);
+  }, [textToNarrate, play, events]);
 
   const handleReadText = () => {
     if (currentLine < script.length - 1) {
@@ -64,6 +64,7 @@ export default function Narration({
   useEffect(() => {
     console.log("current text", currentText);
   }, [currentText]);
+
   return (
     <>
       {currentText && play && (

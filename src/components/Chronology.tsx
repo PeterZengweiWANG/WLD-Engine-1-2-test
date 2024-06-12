@@ -49,19 +49,19 @@ export default function Chronology({
   }, [graph]);
 
   return (
-    <div className="flex flex-col w-full rounded-lg border border-black/25 p-4">
-      <h2 className="text-lg font-semibold mb-4">Chronology of Events</h2>
-      {events.length > 0 ? (
-        events.map((event, index) => (
-          <div key={index}>
-            <p className="font-semibold">Event Title: {event.title}</p>
-            <p>Event Influence: {event.influence}</p>
-            <p>Event Description: {event.description}</p>
-          </div>
-        ))
-      ) : (
-        <p>No event generated yet.</p>
-      )}
-    </div>
+<div className="flex flex-col w-full rounded-lg border-2 border-yellow-500 p-4 bg-red-500 bg-opacity-50">
+  <h2 className="text-lg font-semibold mb-4 text-yellow-500">Chronology of Events</h2>
+  {events.length > 0 ? (
+    events.map((event, index) => (
+      <div key={index} className="text-yellow-500">
+        <p className="font-semibold">Event Title: {event.title}</p>
+        <p>Event Influence: {event.influence}</p>
+        <p>Event Description: {event.description}</p>
+      </div>
+    ))
+  ) : (
+    <p className="text-yellow-500">No event generated yet.</p>
+  )}
+</div>
   );
 }

@@ -151,7 +151,7 @@ export default function AgentsPage() {
         />
         <div id="Agent UI" className="flex flex-col p-8 z-50">
           <button
-            className="p-2 border rounded-lg bg-white/25 mb-2"
+            className="p-2 border-2 border-yellow-500 rounded-lg bg-gray-800 text-yellow-500 mb-2 hover:bg-yellow-500 hover:text-gray-800 transition duration-200"
             onClick={() => setShowUI(!showUI)}
           >
             {showUI ? "Hide UI" : "Show UI"}
@@ -159,15 +159,15 @@ export default function AgentsPage() {
           <div
             className={`${
               showUI ? "flex" : "hidden"
-            }  flex-col w-full bg-white p-4 rounded-lg gap-4`}
+            }  flex-col w-full bg-gray-800 p-4 rounded-lg gap-4 border-2 border-yellow-500`}
           >
             <button
-              className="p-2 rounded-lg border bg-white shadow"
+              className="p-2 rounded-lg border-2 border-yellow-500 bg-gray-800 text-yellow-500 shadow hover:bg-yellow-500 hover:text-gray-800 transition duration-200"
               onClick={() => setPlayNarration(!playNarration)}
             >
               {playNarration ? "Stop Narrating" : "Start Narrating"}
             </button>
-            {generating && <span>Updating Graph...</span>}
+            {generating && <span className="text-yellow-500">Updating Graph...</span>}
             <Timeline events={timelineEvents} onSelect={handleTimelineSelect} />
             <KnowledgeGraph
               graph={graph}

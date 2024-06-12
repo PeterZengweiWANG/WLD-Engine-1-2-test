@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+
 export default function StartPage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center relative cursor-pointer">
@@ -24,6 +25,9 @@ export default function StartPage() {
             Enter the Project
         </Link>
 
+        <Link href="/timeline/startpage" >
+              Title Page
+            </Link>
           
       </div>
     </main>

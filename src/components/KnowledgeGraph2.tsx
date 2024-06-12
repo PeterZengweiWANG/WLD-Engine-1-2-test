@@ -283,12 +283,12 @@ export default function KnowledgeGraph({
   };
 
   const saveGraph = async () => {
-    localStorage.setItem("graph2", JSON.stringify({ nodes, edges }));
+    localStorage.setItem("graph", JSON.stringify({ nodes, edges }));
     alert("Graph saved");
   };
 
   const loadGraph = async () => {
-    const graph = localStorage.getItem("graph2");
+    const graph = localStorage.getItem("graph");
     if (graph) {
       try {
         const graphJSON = JSON.parse(graph);

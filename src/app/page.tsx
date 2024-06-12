@@ -25,6 +25,9 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center relative cursor-pointer bg-gray-900">
       <KeywordBackground />
+      <div className="text-8xl font-bold text-center mb-32 animate-pulse cinzel-text text-white">
+        Light Up Healesville
+      </div>
       <div className="text-2xl font-bold text-center animate-pulse cinzel-text text-white">
         --- PRESS ANYWHERE TO START ---
       </div>

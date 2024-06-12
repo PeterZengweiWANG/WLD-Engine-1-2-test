@@ -15,13 +15,15 @@ export default function StartPage() {
         <Link href="/timeline/presentation">
             About the Project
         </Link>
+                
+        <Link href="/agents2/scenario">
+            What If?
+          </Link>
+
         <Link href="/timeline">
             Enter the Project
         </Link>
-        
-        <Link href="/agents2/scenario">
-          Scenario Simulator
-          </Link>
+
           
       </div>
     </main>

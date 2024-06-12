@@ -353,13 +353,13 @@ export default function KnowledgeGraph({
           className="p-2 bg-red-800 bg-opacity-10 rounded-lg hover:shadow"
           onClick={() => saveGraph()}
         >
-          Save Graph
+          Save Project
         </button>
         <button
           className="p-2 bg-red-800 bg-opacity-10 rounded-lg hover:shadow"
           onClick={() => loadGraph()}
         >
-          Load Graph
+          Load Project
         </button>
       </div>
       {selectedNode && (
@@ -394,7 +394,7 @@ export default function KnowledgeGraph({
           className="p-2 bg-red-800 bg-opacity-10 rounded-lg  border border-black/25 hover:shadow"
           onClick={handleAsk}
         >
-          Ask
+          Explore More
         </button>
       </div>
       <KeyValueTable data={answer} />
@@ -402,7 +402,7 @@ export default function KnowledgeGraph({
         className="p-2 bg-red-800 bg-opacity-10 rounded-lg  border border-black/25 hover:shadow"
         onClick={integrateAnswer}
       >
-        Integrate Answer
+        Add Answer to Project!
       </button>
     </div>
   );
@@ -523,7 +523,7 @@ function EditNodeDialog({
             className="p-2 bg-red-800 bg-opacity-10 w-full rounded-lg border hover:shadow"
             onClick={addProperty}
           >
-            Add Property
+            Add This Idea!
           </button>
         </div>
 

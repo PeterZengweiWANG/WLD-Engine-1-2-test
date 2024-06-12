@@ -25,7 +25,7 @@ export default function MasterPlan() {
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center">
       <div className="absolute inset-0" ref={zoomRef}>
         <img
-          src="/masterplan/0608masterplan.jpg"
+          src="/masterplan/Final Presentation_04.png"
           alt="MasterPlan"
           className="object-cover w-full h-full"
         />

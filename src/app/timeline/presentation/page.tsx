@@ -14,7 +14,6 @@ const images = [
   "/presentation/Final Presentation_01.png",
   "/presentation/Final Presentation_05.png",
   "/presentation/Final Presentation_02.png",
-  // Add more presentation images, path: public\presentation
 ];
 
 export default function PresentationPage() {
@@ -40,12 +39,12 @@ export default function PresentationPage() {
   };
 
   return (
-    <main className="relative flex items-center justify-center h-screen w-full bg-black">
+    <main className="relative flex items-center justify-center h-screen w-full bg-grey-500">
       {!showAlbum && !showMasterPlan ? (
         <img
           src={images[currentIndex]}
           alt={`Slide ${currentIndex + 1}`}
-          className="object-cover w-full h-full"
+          className="object-contain w-full h-full"
           onClick={(e) => {
             const { clientX, currentTarget } = e;
             if (clientX < currentTarget.clientWidth / 2) {
@@ -62,7 +61,7 @@ export default function PresentationPage() {
               key={index}
               src={image}
               alt={`Thumbnail ${index + 1}`}
-              className="object-cover w-full h-auto cursor-pointer"
+              className="object-contain w-full h-auto cursor-pointer"
               onClick={() => handleImageClick(index)}
             />
           ))}

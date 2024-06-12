@@ -151,7 +151,7 @@ export default function AgentsPage() {
         />
         <div id="Agent UI" className="flex flex-col p-8 z-50">
           <button
-            className="p-2 border-2 border-yellow-500 rounded-lg bg-red-800 bg-opacity-10 text-yellow-500 mb-2 hover:bg-yellow-500 hover:text-gray-800 transition duration-200"
+            className="p-2 border-2 border-white rounded-lg bg-red-800 bg-opacity-10 text-white mb-2 hover:bg-white hover:text-gray-800 transition duration-200"
             onClick={() => setShowUI(!showUI)}
           >
             {showUI ? "Hide UI" : "Show UI"}
@@ -159,15 +159,15 @@ export default function AgentsPage() {
           <div
             className={`${
               showUI ? "flex" : "hidden"
-            }  flex-col w-full bg-red-800 bg-opacity-10 p-4 rounded-lg gap-4 border-2 border-yellow-500`}
+            }  flex-col w-full bg-red-800 bg-opacity-10 p-4 rounded-lg gap-4 border-2 border-white`}
           >
             <button
-              className="p-2 rounded-lg border-2 border-yellow-500 bg-red-800 bg-opacity-10 text-yellow-500 shadow hover:bg-yellow-500 hover:text-gray-800 transition duration-200"
+              className="p-2 rounded-lg border-2 border-black/10 bg-red-800 bg-opacity-10 text-white shadow hover:bg-white hover:text-gray-800 transition duration-200"
               onClick={() => setPlayNarration(!playNarration)}
             >
               {playNarration ? "Stop Narrating" : "Start Narrating"}
             </button>
-            {generating && <span className="text-yellow-500">Updating Graph...</span>}
+            {generating && <span className="text-white">Updating Graph...</span>}
             <Timeline events={timelineEvents} onSelect={handleTimelineSelect} />
             <KnowledgeGraph
               graph={graph}

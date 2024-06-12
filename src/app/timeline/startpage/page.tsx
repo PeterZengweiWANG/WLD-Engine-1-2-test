@@ -25,7 +25,7 @@ export default function StartPage() {
             Enter the Project
         </Link>
 
-        <Link href="/timeline/startpage" >
+        <Link href="/" >
               Title Page
             </Link>
           

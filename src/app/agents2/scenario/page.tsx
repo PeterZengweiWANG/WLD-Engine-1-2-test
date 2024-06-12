@@ -165,10 +165,10 @@ export default function ScenarioPage() {
           <div
             className={`${
               showUI ? "flex" : "hidden"
-            }  flex-col w-full bg-red-800 bg-opacity-10 p-4 rounded-lg gap-4 border-2 border-white`}
+            }  flex-col w-full bg-red-800 bg-opacity-10 p-4 rounded-lg gap-4`}
           >
             <button
-              className="p-2 rounded-lg border-2 border-white bg-red-800 bg-opacity-10 text-white shadow hover:bg-white hover:text-gray-800 transition duration-200"
+              className="p-2 rounded-lg border-2 border-white bg-red-800 bg-opacity-10 text-white shadow "
               onClick={() => setPlayNarration(!playNarration)}
             >
               {playNarration ? "Stop Narrating" : "Start Narrating"}

@@ -15,7 +15,7 @@ import crypto from "crypto";
 
 //This is new - just provide a high level goal and groq will figure out how to make agents
 const agentGoal =
-  "Design and keep developing a urban+ landscape+ architectural project for Healesville Victoria to deal with the increasing wildfire threats and seek chance of turning wildfire into a beneficial factor for development by 2050";
+  "Healesville and its surrounding areas in Victoria, Australia, are facing an imminent and catastrophic threat from wildfires in the next 50 years due to the rapidly changing climate caused by global warming and other planetary events. The unique geographical conditions of this region, characterized by its dense forests, steep terrain, and proximity to the Great Dividing Range, make it particularly susceptible to the occurrence and rapid spread of devastating fires. The Yarra Valley, which encompasses Healesville, is known for its picturesque landscapes, wineries, and lush forests. However, these very features also contribute to the area's vulnerability to wildfires. The dense vegetation, coupled with the region's hot and dry summers, creates ideal conditions for fires to ignite and spread rapidly. The Black Saturday Bushfires in 2009, which claimed 173 lives and destroyed over 2,000 homes, serve as a grim reminder of the destructive potential of wildfires in this area. Climate change projections indicate that the frequency and intensity of heatwaves and droughts in Victoria will continue to increase, exacerbating the risk of wildfires. A study by the Commonwealth Scientific and Industrial Research Organisation (CSIRO) warns that the number of extreme fire danger days in Victoria could increase by up to 65% by 2020 and 230% by 2050, compared to the 1990s. The environmental consequences of such frequent and intense wildfires in the Healesville area would be disastrous.The region is home to numerous endangered species, such as the Leadbeater's Possum and the Helmeted Honeyeater, which rely on the native forests for their survival. Widespread fires would lead to the destruction of critical habitats, pushing these species closer to extinction. Moreover, the degradation of water catchments in the area, which supply water to Melbourne, would have far-reaching implications for the city's water security. The socio-economic impact of wildfires on Healesville and its surrounding communities would be equally devastating. Tourism, which is a key economic driver for the region, would suffer significantly due to the destruction of natural attractions and infrastructure. The local wine industry, which relies on the area's unique terroir, would also be jeopardized by the recurring fires and the associated smoke taint on grapes. Furthermore, the mental health toll on residents living under the constant threat of wildfires cannot be overstated. Repeated evacuations, property losses, and the trauma of experiencing life-threatening situations can lead to long-term psychological consequences, such as anxiety, depression, and post-traumatic stress disorder (PTSD). Given the severity of the threat posed by wildfires to Healesville and its surroundings, urgent action is necessary to mitigate the impact of climate change and to implement effective fire management strategies.This includes investing in early warning systems, improving evacuation procedures, and promoting fire-resilient building practices. Additionally, efforts must be made to preserve and restore the region's native forests, which play a critical role in regulating the local climate and reducing the intensity of fires. The potential loss of Healesville and its surrounding areas to wildfires in the next 50 years is a stark reminder of the devastating consequences of climate change. It is imperative that all levels of government, in collaboration with local communities and stakeholders, take immediate and decisive action to address this crisis. The future of this iconic region, its unique biodiversity, and the well-being of its residents depend on our collective ability to confront and adapt to the challenges posed by a rapidly changing climate.";
 //set your agents here. If you leave this empty then Groq creates some for you based on your graph and the goal above.
 const initAgents: any = [];
 //if this is true agents add nodes to the graph as well as update implementation data. Its slower.
@@ -140,18 +140,18 @@ export default function ScenarioPage() {
         <Narration
           play={playNarration}
           textToNarrate={JSON.stringify(graph)}
-          captionPrompt={`You are provided with a world state and an array of agents performing tasks to make changes to this world state, as well as a list of events that occur during the project timeline.
-            Write a short script that narrates a documentary film of the starting and the continuing development processes of an urban+landscape+architectural design project for Healesville, Victoria that dramatizes these events and embellishes them where necessary to make them
-            engaging to the audience. Narrate the documentary as lines of dialogue by a narrator and other characters. Place each item of dialogue on a new line.
-            Each line should be in the format "Speaker: Dialogue". Do not include any other text or explanation.`}
-          imagePrompt={`You are an expert photographer describing images to the blind. Images are taken in Healesville, Victoria. You describe a scene provided by the user in vivid detail.
-            Describe the scene as if you were painting a picture with words. Start your description with: "A photograph of" then use keywords and simple phrases separated by commas.
-            End your description with: Canon EOS 5D Mark IV 24mm f/8 1/250s ISO 100 2019`}
+          captionPrompt={`You are provided with a world state and an array of agents performing tasks to make changes to this world state.
+          Write a short script that narrates a popular podcast that dramatizes these events, makes convincing points and embellishes them where necessary to make them
+          engaging to the audience. Narrate the podcast as lines of dialogue by a host and other characters. Place each item of dialogue on a new line.
+          Each line should be in the format "Speaker: Dialogue". Do not include any other text or explanation.`}
+          imagePrompt={`You are an experienced Australian tour guide describing images about Australia the blind accurately. You describe a scene provided by the user in vivid detail. 
+          Describe the scene as if you were painting a picture with words. Start your description with: "A photograph took around Healesville Australia that shows" then use keywords and simple phrases separated by commas.
+          End your description with: Canon EOS-1D X Mark III 24mm f/8 1/250s ISO 200 2021`}
           events={currentEvent} // Pass the list of events
         />
         <div id="Agent UI" className="flex flex-col p-8 z-50">
           <button
-            className="p-2 border-2 border-yellow-500 rounded-lg bg-gray-800 text-yellow-500 mb-2 hover:bg-yellow-500 hover:text-gray-800 transition duration-200"
+            className="p-2 border-2 border-yellow-500 rounded-lg bg-red-800 bg-opacity-10 text-yellow-500 mb-2 hover:bg-yellow-500 hover:text-gray-800 transition duration-200"
             onClick={() => setShowUI(!showUI)}
           >
             {showUI ? "Hide UI" : "Show UI"}
@@ -159,10 +159,10 @@ export default function ScenarioPage() {
           <div
             className={`${
               showUI ? "flex" : "hidden"
-            }  flex-col w-full bg-gray-800 p-4 rounded-lg gap-4 border-2 border-yellow-500`}
+            }  flex-col w-full bg-red-800 bg-opacity-10 p-4 rounded-lg gap-4 border-2 border-yellow-500`}
           >
             <button
-              className="p-2 rounded-lg border-2 border-yellow-500 bg-gray-800 text-yellow-500 shadow hover:bg-yellow-500 hover:text-gray-800 transition duration-200"
+              className="p-2 rounded-lg border-2 border-yellow-500 bg-red-800 bg-opacity-10 text-yellow-500 shadow hover:bg-yellow-500 hover:text-gray-800 transition duration-200"
               onClick={() => setPlayNarration(!playNarration)}
             >
               {playNarration ? "Stop Narrating" : "Start Narrating"}

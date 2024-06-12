@@ -77,24 +77,24 @@ export default function Agents({
   };
 
   return (
-    <div className="flex flex-col w-full rounded-lg border border-black/25 p-4 ">
+    <div className="flex flex-col w-full rounded-lg border border-black/25 p-4 bg-red-800 bg-opacity-10">
       <button
-        className="p-2 bg-white rounded-lg my-4 border border-black/25 w-full hover:shadow"
+        className="p-2 bg-red-800 bg-opacity-10 rounded-lg my-4 border border-black/25 w-full hover:shadow"
         onClick={() => generateAgents(world, goal ?? "")}
       >
         {generating ? "Generating..." : "Create New Agents"}
       </button>
       <button
-        className="p-2 bg-white rounded-lg my-4 border border-black/25 w-full hover:shadow"
+        className="p-2 bg-red-800 bg-opacity-10 rounded-lg my-4 border border-black/25 w-full hover:shadow"
         onClick={() => runAgents()}
       >
         {generating ? "Generating..." : "Run Agents"}
       </button>
-      <div className="flex justify-between w-full flex-wrap">
+      <div className="flex justify-between w-full flex-wrap bg-red-800 bg-opacity-10">
         {agents.map((a, i) => (
           <div
             key={i}
-            className="flex flex-col rounded-lg bg-white p-2 shadow m-2 w-full"
+            className="flex flex-col rounded-lg bg-red-800 bg-opacity-10 p-2 shadow m-2 w-full"
           >
             <span>
               {generating ? "Generating..." : <KeyValueTable data={a} />}

@@ -6,9 +6,14 @@ import MasterPlan from "@/components/MasterPlan";
 import DesignStrategy from "@/components/DesignStrategy";
 
 const images = [
-  "/presentation/skye00000_In_the_beautiful.png",
-  "/presentation/skye00000_Press_quality_photography.png",
-  "/presentation/skye00000_Imagine_standing.png",
+  "/presentation/Final Presentation_00.png",
+  "/presentation/Final Presentation_03.png",
+  "/presentation/Final Presentation_04.png",
+  "/presentation/Final Presentation_06.png",
+  "/presentation/Final Presentation_07.png",
+  "/presentation/Final Presentation_01.png",
+  "/presentation/Final Presentation_05.png",
+  "/presentation/Final Presentation_02.png",
   // Add more presentation images, path: public\presentation
 ];
 

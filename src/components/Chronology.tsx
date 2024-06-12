@@ -41,7 +41,7 @@ export default function Chronology({
   useEffect(() => {
     const intervalId = setInterval(() => {
       generateEvent();
-    }, Math.random() * 40000 + 20000); // Random interval between 20 and 40 seconds
+    }, Math.random() * 130000 + 120000); // Random interval between 130 and 120 seconds
 
     return () => {
       clearInterval(intervalId);
@@ -49,7 +49,7 @@ export default function Chronology({
   }, [graph]);
 
   return (
-<div className="flex flex-col w-full rounded-lg border-2 border-yellow-500 p-4 bg-red-500 bg-opacity-50">
+<div className="flex flex-col w-full rounded-lg border-2 border-red-500 p-4 bg-red-500 bg-opacity-50">
   <h2 className="text-lg font-semibold mb-4 text-yellow-500">Chronology of Events</h2>
   {events.length > 0 ? (
     events.map((event, index) => (

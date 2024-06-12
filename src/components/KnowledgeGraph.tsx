@@ -316,33 +316,33 @@ export default function KnowledgeGraph({
   
 
   return (
-    <div className="flex flex-col justify-center items-center w-full h-full gap-4 bg-white rounded-lg p-4 border border-black/25">
+    <div className="flex flex-col justify-center items-center w-full h-full gap-4 bg-red-800 bg-opacity-10 rounded-lg p-4 border border-black/25">
       <div className="flex justify-between w-full gap-4 flex-wrap">
         <input
-          className="p-2 bg-white rounded-lg border border-black/25 w-full"
+          className="p-2 bg-red-800 bg-opacity-10 rounded-lg border border-black/25 w-full"
           value={concept}
           onChange={(e) => setConcept(e.target.value)}
         />
         <button
-          className="p-2 bg-white rounded-lg  border border-black/25 hover:shadow"
+          className="p-2 bg-red-800 bg-opacity-10 rounded-lg  border border-black/25 hover:shadow"
           onClick={() => handleCreate(concept)}
         >
           {generating ? "Generating..." : "Create New Graph"}
         </button>
         <button
-          className="p-2 bg-white rounded-lg  border border-black/25 hover:shadow"
+          className="p-2 bg-red-800 bg-opacity-10 rounded-lg  border border-black/25 hover:shadow"
           onClick={() => handleMerge()}
         >
           {generating ? "Generating..." : "Merge Concept"}
         </button>
         <button
-          className="p-2 bg-white rounded-lg  border border-black/25 hover:shadow"
+          className="p-2 bg-red-800 bg-opacity-10 rounded-lg  border border-black/25 hover:shadow"
           onClick={() => handleRefine()}
         >
           {generating ? "Generating..." : "Add Nodes"}
         </button>
         <button
-          className="p-2 bg-white rounded-lg border border-black/25 hover:shadow"
+          className="p-2 bg-red-800 bg-opacity-10 rounded-lg border border-black/25 hover:shadow"
           onClick={() => handleCreateProject()}
         >
           {generating ? "Generating..." : "Create Project"}
@@ -350,13 +350,13 @@ export default function KnowledgeGraph({
       </div>
       <div className="flex justify-between w-full gap-4 flex-wrap">
         <button
-          className="p-2 bg-white rounded-lg hover:shadow"
+          className="p-2 bg-red-800 bg-opacity-10 rounded-lg hover:shadow"
           onClick={() => saveGraph()}
         >
           Save Graph
         </button>
         <button
-          className="p-2 bg-white rounded-lg hover:shadow"
+          className="p-2 bg-red-800 bg-opacity-10 rounded-lg hover:shadow"
           onClick={() => loadGraph()}
         >
           Load Graph
@@ -386,12 +386,12 @@ export default function KnowledgeGraph({
       )}
       <div className="flex justify-between w-full mb-4 gap-4">
         <input
-          className="p-2 bg-white rounded-lg  border border-black/25 w-full"
+          className="p-2 bg-red-800 bg-opacity-10 rounded-lg  border border-black/25 w-full"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
         />
         <button
-          className="p-2 bg-white rounded-lg  border border-black/25 hover:shadow"
+          className="p-2 bg-red-800 bg-opacity-10 rounded-lg  border border-black/25 hover:shadow"
           onClick={handleAsk}
         >
           Ask
@@ -399,7 +399,7 @@ export default function KnowledgeGraph({
       </div>
       <KeyValueTable data={answer} />
       <button
-        className="p-2 bg-white rounded-lg  border border-black/25 hover:shadow"
+        className="p-2 bg-red-800 bg-opacity-10 rounded-lg  border border-black/25 hover:shadow"
         onClick={integrateAnswer}
       >
         Integrate Answer
@@ -484,7 +484,7 @@ function EditNodeDialog({
       onContextMenu={(e) => e.preventDefault()}
       className={`absolute top-0 left-0 w-full h-full bg-black/25 flex flex-col items-center justify-center`}
     >
-      <div className="flex flex-col p-4 max-w-lg bg-white rounded-lg shadow-xl gap-4 w-full">
+      <div className="flex flex-col p-4 max-w-lg bg-red-800 bg-opacity-10 rounded-lg shadow-xl gap-4 w-full">
         <span className="text-lg font-bold w-full">
           {editNode.node
             ? "Edit Node"
@@ -494,7 +494,7 @@ function EditNodeDialog({
         </span>
         <input
           onChange={(e) => setName(e.target.value)}
-          className="p-2 bg-white rounded-lg w-full border border-black/10"
+          className="p-2 bg-red-800 bg-opacity-10 rounded-lg w-full border border-black/10"
           value={name}
         />
         {properties &&
@@ -505,7 +505,7 @@ function EditNodeDialog({
             >
               <span>{key}</span>
               <input
-                className="p-2 bg-white rounded-lg w-full border border-black/10"
+                className="p-2 bg-red-800 bg-opacity-10 rounded-lg w-full border border-black/10"
                 value={properties[key]}
                 onChange={(e) =>
                   setProperties({ ...properties, [key]: e.target.value })
@@ -516,11 +516,11 @@ function EditNodeDialog({
         <div className="w-full border border-black/50 p-2 flex flex-col rounded-lg gap-2">
           <input
             onChange={(e) => setNewPropKey(e.target.value)}
-            className="p-2 bg-white rounded-lg w-full border border-black/10"
+            className="p-2 bg-red-800 bg-opacity-10 rounded-lg w-full border border-black/10"
             value={newPropKey}
           />
           <button
-            className="p-2 bg-white w-full rounded-lg border hover:shadow"
+            className="p-2 bg-red-800 bg-opacity-10 w-full rounded-lg border hover:shadow"
             onClick={addProperty}
           >
             Add Property
@@ -528,19 +528,19 @@ function EditNodeDialog({
         </div>
 
         <div className="flex justify-between items-center gap-2">
-          <button className="p-2 bg-white rounded-lg" onClick={onClose}>
+          <button className="p-2 bg-red-800 bg-opacity-10 rounded-lg" onClick={onClose}>
             Cancel
           </button>
 
           <button
-            className="p-2 bg-white rounded-lg border w-full hover:shadow"
+            className="p-2 bg-red-800 bg-opacity-10 rounded-lg border w-full hover:shadow"
             onClick={handleConfirm}
           >
             Confirm Changes
           </button>
           {editNode.node && (
             <button
-              className=" text-red-500 p-2 bg-white rounded-lg"
+              className=" text-red-500 p-2 bg-red-800 bg-opacity-10 rounded-lg"
               onClick={() => onDelete(editNode.node as GNode)}
             >
               Delete

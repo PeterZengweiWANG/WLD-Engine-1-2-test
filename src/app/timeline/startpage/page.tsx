@@ -9,7 +9,7 @@ export default function StartPage() {
         muted 
         className="absolute w-full h-full object-cover"
       >
-        <source src="/video/test.mp4" type="video/mp4" />
+        <source src="/video/View.mp4" type="video/mp4" />
       </video>
       <div className="z-10 max-w-5xl w-full items-center justify-center text-center animate-pulse cinzel-text text-2xl font-bold text-white lg:flex lg:flex-col flex-wrap gap-4">
         <Link href="/timeline/presentation">

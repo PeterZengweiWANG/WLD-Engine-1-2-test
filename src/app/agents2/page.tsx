@@ -5,6 +5,7 @@ import Narration from "@/components/Narration";
 import KnowledgeGraph from "@/components/KnowledgeGraph2";
 import { Graph, relaxGraph } from "@/components/Graph";
 import { getGroqCompletion } from "@/ai/groq";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -86,6 +87,11 @@ export default function AgentsPage() {
           >
             {showUI ? "Hide UI" : "Show UI"}
           </button>
+
+          <Link href="/timeline/startpage" className="p-2 border-2 border-white rounded-lg bg-red-800 bg-opacity-10 text-white mb-2 hover:bg-white hover:text-gray-800 transition duration-200">
+              Return
+            </Link>
+
           <div
             className={`${
               showUI ? "flex" : "hidden"

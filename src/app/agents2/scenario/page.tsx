@@ -12,6 +12,7 @@ import { generateImageFal } from "@/ai/fal";
 import Panorama from "@/components/Panorama";
 import Chronology, { Event } from "@/components/Chronology";
 import crypto from "crypto";
+import Link from "next/link";
 
 //This is new - just provide a high level goal and groq will figure out how to make agents
 const agentGoal =
@@ -156,6 +157,11 @@ export default function ScenarioPage() {
           >
             {showUI ? "Hide UI" : "Show UI"}
           </button>
+
+          <Link href="/timeline/startpage" className="p-2 border-2 border-white rounded-lg bg-red-800 bg-opacity-10 text-white mb-2 hover:bg-white hover:text-gray-800 transition duration-200 flex justify-center">
+              Return
+            </Link>
+
           <div
             className={`${
               showUI ? "flex" : "hidden"

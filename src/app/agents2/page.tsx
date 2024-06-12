@@ -69,16 +69,15 @@ export default function AgentsPage() {
     <main className="">
       <div className="z-10 max-w-lg w-full items-center justify-between font-mono text-sm lg:flex">
         <Narration
-          play={playNarration}
-          textToNarrate={JSON.stringify(graph)}
-          captionPrompt={`You are provided with a world state and an array of agents performing tasks to make changes to this world state. 
+                  play={playNarration}
+                  textToNarrate={JSON.stringify(graph)}
+                  captionPrompt={`You are provided with a world state and an array of agents performing tasks to make changes to this world state. 
         Write a short script that narrates a documentary film that dramatizes these events and embellishes them where necessary to make them 
         engaging to the audience. Narrate the documenary as lines of dialogue by a narrator and other characters. Place each item of dialogue on a new line. 
         Each line should be in the format "Speaker: Dialogue". Do not include any other text or explanation.`}
-          imagePrompt={`You are an expert photographer describing images to the blind. You describe a scene provided by the user in vivid detail. 
+                  imagePrompt={`You are an expert photographer describing images to the blind. You describe a scene provided by the user in vivid detail. 
           Describe the scene as if you were painting a picture with words. Start your description with: "A photograph of" then use keywords and simple phrases separated by commas.
-          End your description with: Canon EOS 5D Mark IV, 24mm, f/8, 1/250s, ISO 100, 2019`}
-        />
+          End your description with: Canon EOS 5D Mark IV, 24mm, f/8, 1/250s, ISO 100, 2019`} events={[]}        />
         <div id="Agent UI" className="flex flex-col p-8 z-50">
           <button
             className="p-2 border rounded-lg bg-white/25 mb-2"

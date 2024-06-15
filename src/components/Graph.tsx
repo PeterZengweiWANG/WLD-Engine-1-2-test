@@ -117,6 +117,23 @@ export default function GraphCanvas({
 
         ctx.fillText(feature.name, x * mapScale, y * mapScale - 8 / scale);
         ctx.beginPath();
+        // Determine the color based on the node type and influence
+        let fillColor = "blue";
+        if (feature.properties && feature.properties.influence) {
+          switch (feature.properties.influence) {
+            case "Positive":
+              fillColor = "green";
+              break;
+            case "Negative":
+              fillColor = "red";
+              break;
+            case "Neutral":
+              fillColor = "yellow";
+              break;
+          }
+        }
+        ctx.fillStyle = fillColor;
+
         // Define the circle
         ctx.arc(x * mapScale, y * mapScale + 2, 5 / scale, 0, 2 * Math.PI);
         ctx.fill();

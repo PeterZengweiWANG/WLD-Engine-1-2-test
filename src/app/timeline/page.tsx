@@ -14,17 +14,17 @@ import Chronology, { Event } from "@/components/Chronology";
 import crypto from "crypto";
 import Link from "next/link";
 
-//This is new - just provide a high level goal and groq will figure out how to make agents
+// This is new - just provide a high-level goal and groq will figure out how to make agents
 const agentGoal =
-  "The wildfire will likely burn every bit of the land at in Healesville and surrounds in the next 50 years. As a response to this situation, the following solutions are implemented: 1. categories the land in this area into three types, farmland, forests, and urban environment. 2. Inspired by the ancient aboriginal wisdom, a mass scale aboriginal culture/cool burning program covering the entire region is initiated. The central idea of Cool Burns is fire management using a ‘cool’ fire. Night times and early mornings are ideal for these fires as nightly dew helps cool down the fire and the winds are often gentle. The practice involves lighting low fires in small areas on foot, with matches or, traditionally, with fire sticks. These fires are closely monitored, ensuring that only the underbrush ( underbrush ideal for burning: fully grown grasses that are not dried out ) is burnt. Cool Burns not only clear areas of land, they also ensure that seeds and nutrients in the soil are not baked and destroyed. In fact, these fires assist in changing vegetation structures by reducing the density of risk factor plants such as Bracken Fern or Casuarina which lead to extreme fuel loads. In every early dry-season from then on, cool fires will trickle through the landscape and burn only some of the fuel, creating a network, or mosaic, of burnt firebreaks. These stop the late dry-season, hot fires. The Key of this program is for cool burning to be implemented on every type of land with no exception, the sole purpose of the program is to create a mass reliable network of burnt firebreaks across the area to prevent the catastrophic wildfires. 3. In response to the Cool Burn program,  each land type has been reprogrammed with its own unique design strategies to adapt the new conditions as the Cool Burn program is effective across all types of land. 4. The residents in urban area needs to be replanned and relocated regularly using portable and modular housing systems due to the yearly Cool Burn program. For example, in the first year, 5% of total areas of Healesville town will be burned with cold fire in order to create firebreak zone and management the bushfire risk, residents within the area will be temporarily relocated to unburnt areas, in the next year, another 5% of total area of Healesville will be burned, and residents in that area will be relocated to new areas. The strategy will implement modular temporary housing systems: a type of residential building that can be built, disassembled and recycled quickly and designed to be self sustainable for a couple of years to achieve the goals of quickly and regularly relocating large population. 5. Farm lands are also regularly burned in similar patterns as the urban areas, every year the burnt area of farm land will be temporarily repurposed to two uses mainly: one is to grow valuable mushroom species that can thrive in recently burned areas such as morels and pyrophytic fungi, another one is to establish temporary biochar production facilities as burnt vegetation can be converted into biochar, a charcoal-like substance used to improve soil quality, increase soil carbon sequestration, and enhance soil water retention. The goal of this strategy is about maintaining the economical value of farm land even though constant cool burning in selected large areas. 6. The forest area is a crucial part of the Cool Burn program, however due to its complex and fragile ecosystem, scientific and cultural value, a customised design strategy is implemented to ensure a sustainable cycle of cool burn in the forest. The central idea of the strategy is based on the “Fireproof Berm Design”, this is a series of large scale, dendritical spreading berm and bunker structure evenly located in the forest in east of Healesville. This outside berm creates a wildfire-defensible space clearing nearby vegetation, integrates a series of small water reservoirs, contains elevated wildfire observation towers and fast reaction stations, and tourist observation decks for viewing Aboriginal cool burning activities. The inside bunker has Hot Springs, Day Spa and accommodation facilities, and the bottom of the bunker features a wombat cave-inspired cave+ tunnel+ open space style sanctuary that can be used as shelters for local wildlife during wildfires. The overall structure should be like an 2 levels underground architectural infrustructure, like a valley. These structures will be the centra and ignition points of its own specific areas of the forest as they are eventually distributed in the forest. The berm structure works as recreational facility, wildlife shelter, scientific fire management facility and Cool Burn program ignition points at the same time, this makes the “Fireproof Berm Design” the most important part for the program in controlling fire risk in Healesville forests.";
-//set your agents here. If you leave this empty then Groq creates some for you based on your graph and the goal above.
+  "This is all about an urban planning and landscape architectural project. The wildfire will likely burn every bit of the land at in Healesville and surrounds in the next 50 years. As a response to this situation, the following solutions are implemented: 1. categories the land in this area into three types, farmland, forests, and urban environment. 2. Inspired by the ancient aboriginal wisdom, a mass scale aboriginal culture/cool burning program covering the entire region is initiated. The central idea of Cool Burns is fire management using a ‘cool’ fire. Night times and early mornings are ideal for these fires as nightly dew helps cool down the fire and the winds are often gentle. The practice involves lighting low fires in small areas on foot, with matches or, traditionally, with fire sticks. These fires are closely monitored, ensuring that only the underbrush (underbrush ideal for burning: fully grown grasses that are not dried out) is burnt. Cool Burns not only clear areas of land, they also ensure that seeds and nutrients in the soil are not baked and destroyed. In fact, these fires assist in changing vegetation structures by reducing the density of risk factor plants such as Bracken Fern or Casuarina which lead to extreme fuel loads. In every early dry-season from then on, cool fires will trickle through the landscape and burn only some of the fuel, creating a network, or mosaic, of burnt firebreaks. These stop the late dry-season, hot fires. The Key of this program is for cool burning to be implemented on every type of land with no exception, the sole purpose of the program is to create a mass reliable network of burnt firebreaks across the area to prevent the catastrophic wildfires. 3. In response to the Cool Burn program, each land type has been reprogrammed with its own unique design strategies to adapt the new conditions as the Cool Burn program is effective across all types of land. 4. The residents in urban area needs to be replanned and relocated regularly using portable and modular housing systems due to the yearly Cool Burn program. For example, in the first year, 5% of total areas of Healesville town will be burned with cold fire in order to create firebreak zone and management the bushfire risk, residents within the area will be temporarily relocated to unburnt areas, in the next year, another 5% of total area of Healesville will be burned, and residents in that area will be relocated to new areas. The strategy will implement modular temporary housing systems: a type of residential building that can be built, disassembled and recycled quickly and designed to be self sustainable for a couple of years to achieve the goals of quickly and regularly relocating large population. 5. Farm lands are also regularly burned in similar patterns as the urban areas, every year the burnt area of farm land will be temporarily repurposed to two uses mainly: one is to grow valuable mushroom species that can thrive in recently burned areas such as morels and pyrophytic fungi, another one is to establish temporary biochar production facilities as burnt vegetation can be converted into biochar, a charcoal-like substance used to improve soil quality, increase soil carbon sequestration, and enhance soil water retention. The goal of this strategy is about maintaining the economical value of farm land even though constant cool burning in selected large areas. 6. The forest area is a crucial part of the Cool Burn program, however due to its complex and fragile ecosystem, scientific and cultural value, a customised design strategy is implemented to ensure a sustainable cycle of cool burn in the forest. The central idea of the strategy is based on the “Fireproof Berm Design”, this is a series of large scale, dendritical spreading berm and bunker structure evenly located in the forest in east of Healesville. This outside berm creates a wildfire-defensible space clearing nearby vegetation, integrates a series of small water reservoirs, contains elevated wildfire observation towers and fast reaction stations, and tourist observation decks for viewing Aboriginal cool burning activities. The inside bunker has Hot Springs, Day Spa and accommodation facilities, and the bottom of the bunker features a wombat cave-inspired cave+ tunnel+ open space style sanctuary that can be used as shelters for local wildlife during wildfires. The overall structure should be like an 2 levels underground architectural infrustructure, like a valley. These structures will be the centra and ignition points of its own specific areas of the forest as they are eventually distributed in the forest. The berm structure works as recreational facility, wildlife shelter, scientific fire management facility and Cool Burn program ignition points at the same time, this makes the “Fireproof Berm Design” the most important part for the program in controlling fire risk in Healesville forests.";
+// Set your agents here. If you leave this empty then Groq creates some for you based on your graph and the goal above.
 const initAgents: any = [];
-//if this is true agents add nodes to the graph as well as update implementation data. Its slower.
+// If this is true agents add nodes to the graph as well as update implementation data. It's slower.
 const addNodes = true;
-//start year
+// Start year
 const startYear = 2024;
 
-//Demo of running multiple agents that all compete for resources
+// Demo of running multiple agents that all compete for resources
 export default function AgentsPage() {
   noStore();
   const [graph, setGraph] = useState<Graph>({ nodes: [], edges: [] });
@@ -39,11 +39,11 @@ export default function AgentsPage() {
 
   const handleResponse = async (newAgents: any[]) => {
     setGenerating(true);
-    //now we have the new agents we can implement our logic for how to update the graph.
+    // Now we have the new agents we can implement our logic for how to update the graph.
     try {
       const requestString = `${JSON.stringify({ graph, newAgents })}`;
       console.log(requestString);
-      //just refine implementation
+      // Just refine implementation
       const newStates = await getGroqCompletion(
         requestString,
         1024,
@@ -58,7 +58,7 @@ export default function AgentsPage() {
       );
       const graphJSON = JSON.parse(newStates);
       console.log(graphJSON);
-      //iterate over state updates
+      // Iterate over state updates
       const updatedNodes = [...graph.nodes];
       for (const [id, state] of Object.entries(graphJSON.newStates)) {
         const node: any = updatedNodes.find((n) => n.id === id);
@@ -91,7 +91,7 @@ export default function AgentsPage() {
 
       setGraph(newGraph);
       setCurrentYear((c) => c + 5);
-      //add to timeline
+      // Add to timeline
       timelineEvents.push({
         time: currentYear,
         title: currentYear.toString(),
@@ -120,11 +120,11 @@ export default function AgentsPage() {
 
   const handleNodeSelect = async (node: GNode) => {
     setFetching(true);
-    //improve prompt
+    // Improve prompt
     const newPrompt =
       "An equirectangular panorama of" + node.name + node.properties.image ??
       "" + ". Canon EOS 5D Mark IV 24mm f/8 1/250s ISO 100";
-    //if immersive use blockade otherwise just use fal
+    // If immersive use blockade otherwise just use fal
     const pano = await generateImageFal(newPrompt);
     if (pano) setImg(pano);
     setFetching(false);
@@ -187,7 +187,12 @@ export default function AgentsPage() {
               goal={agentGoal}
               time={currentYear.toString()}
             />
-            <Chronology graph={graph} onEventGenerated={setCurrentEvent} />
+            <Chronology
+              graph={graph}
+              onEventGenerated={(event: Event) =>
+                setCurrentEvent((prevEvents) => [...prevEvents, event])
+              }
+            />
           </div>
         </div>
       </div>

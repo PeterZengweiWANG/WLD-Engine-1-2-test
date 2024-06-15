@@ -14,17 +14,17 @@ import Chronology, { Event } from "@/components/Chronology";
 import crypto from "crypto";
 import Link from "next/link";
 
-//This is new - just provide a high level goal and groq will figure out how to make agents
+// This is new - just provide a high-level goal and groq will figure out how to make agents
 const agentGoal =
-  "Healesville and its surrounding areas in Victoria, Australia, are facing an imminent and catastrophic threat from wildfires in the next 50 years due to the rapidly changing climate caused by global warming and other planetary events. The unique geographical conditions of this region, characterized by its dense forests, steep terrain, and proximity to the Great Dividing Range, make it particularly susceptible to the occurrence and rapid spread of devastating fires. The Yarra Valley, which encompasses Healesville, is known for its picturesque landscapes, wineries, and lush forests. However, these very features also contribute to the area's vulnerability to wildfires. The dense vegetation, coupled with the region's hot and dry summers, creates ideal conditions for fires to ignite and spread rapidly. The Black Saturday Bushfires in 2009, which claimed 173 lives and destroyed over 2,000 homes, serve as a grim reminder of the destructive potential of wildfires in this area. Climate change projections indicate that the frequency and intensity of heatwaves and droughts in Victoria will continue to increase, exacerbating the risk of wildfires. A study by the Commonwealth Scientific and Industrial Research Organisation (CSIRO) warns that the number of extreme fire danger days in Victoria could increase by up to 65% by 2020 and 230% by 2050, compared to the 1990s. The environmental consequences of such frequent and intense wildfires in the Healesville area would be disastrous.The region is home to numerous endangered species, such as the Leadbeater's Possum and the Helmeted Honeyeater, which rely on the native forests for their survival. Widespread fires would lead to the destruction of critical habitats, pushing these species closer to extinction. Moreover, the degradation of water catchments in the area, which supply water to Melbourne, would have far-reaching implications for the city's water security. The socio-economic impact of wildfires on Healesville and its surrounding communities would be equally devastating. Tourism, which is a key economic driver for the region, would suffer significantly due to the destruction of natural attractions and infrastructure. The local wine industry, which relies on the area's unique terroir, would also be jeopardized by the recurring fires and the associated smoke taint on grapes. Furthermore, the mental health toll on residents living under the constant threat of wildfires cannot be overstated. Repeated evacuations, property losses, and the trauma of experiencing life-threatening situations can lead to long-term psychological consequences, such as anxiety, depression, and post-traumatic stress disorder (PTSD). Given the severity of the threat posed by wildfires to Healesville and its surroundings, urgent action is necessary to mitigate the impact of climate change and to implement effective fire management strategies.This includes investing in early warning systems, improving evacuation procedures, and promoting fire-resilient building practices. Additionally, efforts must be made to preserve and restore the region's native forests, which play a critical role in regulating the local climate and reducing the intensity of fires. The potential loss of Healesville and its surrounding areas to wildfires in the next 50 years is a stark reminder of the devastating consequences of climate change. It is imperative that all levels of government, in collaboration with local communities and stakeholders, take immediate and decisive action to address this crisis. The future of this iconic region, its unique biodiversity, and the well-being of its residents depend on our collective ability to confront and adapt to the challenges posed by a rapidly changing climate.";
-//set your agents here. If you leave this empty then Groq creates some for you based on your graph and the goal above.
+  "Healesville and its surrounding areas in Victoria, Australia, are facing an imminent and catastrophic threat from wildfires in the next 50 years due to the rapidly changing climate caused by global warming and other planetary events. The unique geographical conditions of this region, characterized by its dense forests, steep terrain, and proximity to the Great Dividing Range, make it particularly susceptible to the occurrence and rapid spread of devastating fires. The Yarra Valley, which encompasses Healesville, is known for its picturesque landscapes, wineries, and lush forests. However, these very features also contribute to the area's vulnerability to wildfires. The dense vegetation, coupled with the region's hot and dry summers, creates ideal conditions for fires to ignite and spread rapidly. The Black Saturday Bushfires in 2009, which claimed 173 lives and destroyed over 2,000 homes, serve as a grim reminder of the destructive potential of wildfires in this area. Climate change projections indicate that the frequency and intensity of heatwaves and droughts in Victoria will continue to increase, exacerbating the risk of wildfires. A study by the Commonwealth Scientific and Industrial Research Organisation (CSIRO) warns that the number of extreme fire danger days in Victoria could increase by up to 65% by 2020 and 230% by 2050, compared to the 1990s. The environmental consequences of such frequent and intense wildfires in the Healesville area would be disastrous. The region is home to numerous endangered species, such as the Leadbeater's Possum and the Helmeted Honeyeater, which rely on the native forests for their survival. Widespread fires would lead to the destruction of critical habitats, pushing these species closer to extinction. Moreover, the degradation of water catchments in the area, which supply water to Melbourne, would have far-reaching implications for the city's water security. The socio-economic impact of wildfires on Healesville and its surrounding communities would be equally devastating. Tourism, which is a key economic driver for the region, would suffer significantly due to the destruction of natural attractions and infrastructure. The local wine industry, which relies on the area's unique terroir, would also be jeopardized by the recurring fires and the associated smoke taint on grapes. Furthermore, the mental health toll on residents living under the constant threat of wildfires cannot be overstated. Repeated evacuations, property losses, and the trauma of experiencing life-threatening situations can lead to long-term psychological consequences, such as anxiety, depression, and post-traumatic stress disorder (PTSD). Given the severity of the threat posed by wildfires to Healesville and its surroundings, urgent action is necessary to mitigate the impact of climate change and to implement effective fire management strategies. This includes investing in early warning systems, improving evacuation procedures, and promoting fire-resilient building practices. Additionally, efforts must be made to preserve and restore the region's native forests, which play a critical role in regulating the local climate and reducing the intensity of fires. The potential loss of Healesville and its surrounding areas to wildfires in the next 50 years is a stark reminder of the devastating consequences of climate change. It is imperative that all levels of government, in collaboration with local communities and stakeholders, take immediate and decisive action to address this crisis. The future of this iconic region, its unique biodiversity, and the well-being of its residents depend on our collective ability to confront and adapt to the challenges posed by a rapidly changing climate.";
+// Set your agents here. If you leave this empty then Groq creates some for you based on your graph and the goal above.
 const initAgents: any = [];
-//if this is true agents add nodes to the graph as well as update implementation data. Its slower.
+// If this is true agents add nodes to the graph as well as update implementation data. It's slower.
 const addNodes = true;
-//start year
+// Start year
 const startYear = 2024;
 
-//Demo of running multiple agents that all compete for resources
+// Demo of running multiple agents that all compete for resources
 export default function ScenarioPage() {
   noStore();
   const [graph, setGraph] = useState<Graph>({ nodes: [], edges: [] });
@@ -39,11 +39,11 @@ export default function ScenarioPage() {
 
   const handleResponse = async (newAgents: any[]) => {
     setGenerating(true);
-    //now we have the new agents we can implement our logic for how to update the graph.
+    // Now we have the new agents we can implement our logic for how to update the graph.
     try {
       const requestString = `${JSON.stringify({ graph, newAgents })}`;
       console.log(requestString);
-      //just refine implementation
+      // Just refine implementation
       const newStates = await getGroqCompletion(
         requestString,
         1024,
@@ -58,7 +58,7 @@ export default function ScenarioPage() {
       );
       const graphJSON = JSON.parse(newStates);
       console.log(graphJSON);
-      //iterate over state updates
+      // Iterate over state updates
       const updatedNodes = [...graph.nodes];
       for (const [id, state] of Object.entries(graphJSON.newStates)) {
         const node: any = updatedNodes.find((n) => n.id === id);
@@ -91,7 +91,7 @@ export default function ScenarioPage() {
 
       setGraph(newGraph);
       setCurrentYear((c) => c + 5);
-      //add to timeline
+      // Add to timeline
       timelineEvents.push({
         time: currentYear,
         title: currentYear.toString(),
@@ -120,11 +120,11 @@ export default function ScenarioPage() {
 
   const handleNodeSelect = async (node: GNode) => {
     setFetching(true);
-    //improve prompt
+    // Improve prompt
     const newPrompt =
       "An equirectangular panorama of" + node.name + node.properties.image ??
       "" + ". Canon EOS 5D Mark IV 24mm f/8 1/250s ISO 100";
-    //if immersive use blockade otherwise just use fal
+    // If immersive use blockade otherwise just use fal
     const pano = await generateImageFal(newPrompt);
     if (pano) setImg(pano);
     setFetching(false);
@@ -187,7 +187,12 @@ export default function ScenarioPage() {
               goal={agentGoal}
               time={currentYear.toString()}
             />
-            <Chronology graph={graph} onEventGenerated={setCurrentEvent} />
+            <Chronology
+              graph={graph}
+              onEventGenerated={(event: Event) =>
+                setCurrentEvent((prevEvents) => [...prevEvents, event])
+              }
+            />
           </div>
         </div>
       </div>

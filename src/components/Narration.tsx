@@ -1,4 +1,3 @@
-"use client";
 import Caption from "./Caption";
 import { useEffect, useState } from "react";
 import { getGeminiVision } from "@/ai/gemini";
@@ -36,16 +35,17 @@ export default function Narration({
     const generateNarrative = async () => {
       const combinedInput = {
         graph: textToNarrate,
-        events: events,
+        event: events[events.length - 1],
+        currentLine: script[currentLine],
       };
       const description = await getGeminiVision(
         JSON.stringify(combinedInput),
         undefined,
         captionPrompt
       );
-      setScript(description.split("\n").filter((line) => line !== ""));
-      setCurrentLine(0);
-      setCurrentText(description.split("\n")[0]);
+      const newScript = description.split("\n").filter((line) => line !== "");
+      setScript((prevScript) => [...prevScript, ...newScript]);
+      setCurrentText(newScript[0]);
       if (onNarration) onNarration(description);
     };
 

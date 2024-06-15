@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import crypto from "crypto";
 import KeyValueTable from "@/components/KeyValueTable";
 import { unstable_noStore as noStore } from "next/cache";
+
 type EditNode = {
   x: number;
   y: number;
@@ -18,8 +19,12 @@ type EditNode = {
   context: GNode[];
 };
 
-//Generates a knowledge graph of a given concept and allows for quering it
-//The onChange event is fired whenever the graph changes for integration with other components
+type Event = {
+  title: string;
+  influence: string;
+  description: string;
+};
+
 export default function KnowledgeGraph({
   graph = { nodes: [], edges: [] },
   onUpdate = (graph: Graph) => {},
@@ -40,6 +45,9 @@ export default function KnowledgeGraph({
   const [editNode, setEditNode] = useState<EditNode | null>(null);
   const [question, setQuestion] = useState<string>("");
   const [answer, setAnswer] = useState<any>({});
+  const [currentEvent, setCurrentEvent] = useState<Event[] | null>(null); // Add currentEvent state
+  const [currentYear, setCurrentYear] = useState<number>(2020); // Add currentYear state
+  const [timelineEvents, setTimelineEvents] = useState<any[]>([]); // Add timelineEvents state
 
   //listen for changes to the props
   useEffect(() => {
@@ -226,7 +234,6 @@ export default function KnowledgeGraph({
   const handleClose = () => {
     setEditNode(null);
   };
-  
 
   const handleCreateNode = async (node: GNode, context: GNode[]) => {
     //connect to graph
@@ -313,7 +320,90 @@ export default function KnowledgeGraph({
     setEdges(newEdges);
     setEditNode(null);
   };
-  
+
+  const handleResponse = async (newAgents: any[]) => {
+    setGenerating(true);
+    // Now we have the new agents we can implement our logic for how to update the graph.
+    try {
+      const requestString = `${JSON.stringify({ graph, newAgents })}`;
+      console.log(requestString);
+      // Just refine implementation
+      const newStates = await getGroqCompletion(
+        requestString,
+        1024,
+        `The user will provide you with an implementation of a specific concept in the form of a knowledge graph together with an array of agents working towards specific goals within this graph.
+        Your task is to update the knowledge graph to reflect the changes made by the agents.
+        Generate an array of new Nodes and an array of new Edges to represent any concepts not already modelled by the knowledge graph.
+        Update any existing nodes affected by the agents using a state map. Generate a new state object for each affected node using the node ID as the key and the new state as the value.
+        Return your response in JSON in the format {newNodes:Node[], newEdges:Edge[], newStates:{[id:string]: string}}.`,
+        true,
+        "llama3-8b-8192"
+      );
+      const graphJSON = JSON.parse(newStates);
+      console.log(graphJSON);
+      // Iterate over state updates
+      const updatedNodes = [...graph.nodes];
+      for (const [id, state] of Object.entries(graphJSON.newStates)) {
+        const node: any = updatedNodes.find((n) => n.id === id);
+        if (node) node.state = state;
+      }
+
+      // Introduce the current event into the Graph JSON
+      if (currentEvent) {
+        currentEvent.forEach((event) => {
+          const eventNode: GNode = {
+            id: crypto.randomBytes(4).toString("hex"),
+            name: event.title,
+            x: Math.random() * 100,
+            y: Math.random() * 100,
+            properties: {
+              influence: event.influence,
+              description: event.description,
+            },
+          };
+
+          // Find related nodes based on the event description
+          const relatedNodes = graph.nodes.filter((node) =>
+            event.description.includes(node.name)
+          );
+
+          // Add edges between the event node and related nodes
+          const newEdges = relatedNodes.map((relatedNode) => ({
+            source: eventNode.id,
+            target: relatedNode.id,
+            relation: "related",
+          }));
+
+          updatedNodes.push(eventNode);
+          graphJSON.newEdges.push(...newEdges);
+        });
+      }
+
+      const edges = [...graph.edges, ...graphJSON.newEdges];
+      const relaxed = relaxGraph(
+        [...updatedNodes, ...graphJSON.newNodes],
+        edges
+      );
+      const newGraph = { nodes: relaxed, edges: edges };
+
+      setNodes(newGraph.nodes);
+      setEdges(newGraph.edges);
+      setCurrentYear((c) => c + 5);
+      // Add to timeline
+      setTimelineEvents((prevEvents) => [
+        ...prevEvents,
+        {
+          time: currentYear,
+          title: currentYear.toString(),
+          data: newGraph,
+        },
+      ]);
+    } catch (e) {
+      console.error(e);
+      alert("failed to update graph");
+    }
+    setGenerating(false);
+  };
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-full gap-4 bg-red-800 bg-opacity-10 rounded-lg p-4 border border-black/25">

@@ -13,7 +13,7 @@ export default function Chronology({
   onEventGenerated,
 }: {
   graph: any;
-  onEventGenerated: (event: Event[]) => void;
+  onEventGenerated: (event: Event) => void;
 }) {
   const [events, setEvents] = useState<Event[]>([]);
 
@@ -31,7 +31,7 @@ export default function Chronology({
       const eventJSON = JSON.parse(eventResponse);
       console.log("Generated event:", eventJSON);
       setEvents((prevEvents) => [...prevEvents, eventJSON]);
-      onEventGenerated([...events, eventJSON]);
+      onEventGenerated(eventJSON);
     } catch (e) {
       console.error(e);
       alert("Failed to generate event");
@@ -41,7 +41,7 @@ export default function Chronology({
   useEffect(() => {
     const intervalId = setInterval(() => {
       generateEvent();
-    }, Math.random() * 130000 + 120000); // Random interval between 130 and 120 seconds
+    }, Math.random() * 90000 + 45000); // Random interval between 90 and 45 seconds
 
     return () => {
       clearInterval(intervalId);
@@ -49,19 +49,19 @@ export default function Chronology({
   }, [graph]);
 
   return (
-<div className="flex flex-col w-full rounded-lg border-2 border-white p-4 bg-red-800 bg-opacity-10">
-  <h2 className="text-lg font-semibold mb-4 text-white">Chronology of Events</h2>
-  {events.length > 0 ? (
-    events.map((event, index) => (
-      <div key={index} className="text-white">
-        <p className="font-semibold">Event Title: {event.title}</p>
-        <p>Event Influence: {event.influence}</p>
-        <p>Event Description: {event.description}</p>
-      </div>
-    ))
-  ) : (
-    <p className="text-white">No event generated yet.</p>
-  )}
-</div>
+    <div className="flex flex-col w-full rounded-lg border-2 border-white p-4 bg-red-800 bg-opacity-10">
+      <h2 className="text-lg font-semibold mb-4 text-white">Chronology of Events</h2>
+      {events.length > 0 ? (
+        events.map((event, index) => (
+          <div key={index} className="text-white">
+            <p className="font-semibold">Event Title: {event.title}</p>
+            <p>Event Influence: {event.influence}</p>
+            <p>Event Description: {event.description}</p>
+          </div>
+        ))
+      ) : (
+        <p className="text-white">No event generated yet.</p>
+      )}
+    </div>
   );
 }

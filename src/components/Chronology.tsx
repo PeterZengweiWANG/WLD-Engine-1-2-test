@@ -23,8 +23,8 @@ export default function Chronology({
       const eventResponse = await getGroqCompletion(
         requestString,
         512,
-        `Based on the provided knowledge graph of the design project, generate an event that could either have a positive, negative, or neutral influence on the project in Healesville.
-        Return your response in JSON in the format {title: string, influence: "Positive" | "Negative" | "Neutral", description: string}.
+        `Based on the provided knowledge graph of the design project, generate an event that could either have a negative, positive, or neutral influence on the project in Healesville.
+        Return your response in JSON in the format {title: string, influence: "Negative" | "Positive"| "Neutral", description: string}.
         The event description should be around 70 words.` + jsonText,
         true
       );
@@ -41,7 +41,7 @@ export default function Chronology({
   useEffect(() => {
     const intervalId = setInterval(() => {
       generateEvent();
-    }, Math.random() * 90000 + 45000); // Random interval between 90 and 45 seconds
+    }, Math.random() * 9000 + 4500); // Random interval between 90 and 45 seconds
 
     return () => {
       clearInterval(intervalId);

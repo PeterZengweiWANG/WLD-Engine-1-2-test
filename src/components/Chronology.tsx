@@ -41,7 +41,7 @@ export default function Chronology({
   useEffect(() => {
     const intervalId = setInterval(() => {
       generateEvent();
-    }, Math.random() * 9000 + 4500); // Random interval between 90 and 45 seconds
+    }, Math.random() * 90000 + 30000); // Random interval between 90 and 30 seconds
 
     return () => {
       clearInterval(intervalId);
